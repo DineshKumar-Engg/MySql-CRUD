@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "MYSQL-Employee Register",
-  "main": "index.js",
+  "main": "Server.js",
   "scripts": {
     "start": "nodemon Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
