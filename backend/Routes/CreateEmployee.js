@@ -47,7 +47,8 @@ CreateEmployee.post('/',upload.single('photo'), async (req, res) => {
         })
         return res.status(200).json({message:"Successfully Created"})
     } catch (error) {
-        return res.status(400).json(error)
+        return  res.status(400).json(error)
+        
     }
   })
 

@@ -26,6 +26,7 @@ const Register = () => {
 
   const [{loading},dispatch]=useReducer(reducer,{
     loading:false,
+
 })
   useEffect(() => {
     setInput(user)
@@ -69,25 +70,39 @@ const Register = () => {
     formData.append("salary", input.salary)
     formData.append("sex", input.sex)
     formData.append("photo", file)
-
-    try {
-      dispatch({type:"REQUEST LOADING"})
-
-      await axios.put(`http://localhost:5000/employee/` + user.id, formData)
-        .then((res) => {
-          toast.success(res.data,{autoClose:2000})
-        })
-
+    if(!input.name || ! input.email ||
+      ! input.phoneNumber || ! input.address ||
+      ! input.joinedDate || ! input.department ||
+      ! input.position || ! input.salary ||
+      ! input.sex || ! file
+      )
+    {
+      return SetError("Please Fill All Details")
+      
     }
-    catch (err) {
-      console.log("Error : ", err)
-    }
-    dispatch({type:"REQUEST SUCCESS"})
 
-    setInput('')
-    setFile('')
+      try {
+        dispatch({type:"REQUEST LOADING"})
+  
+        await axios.put(`${process.env.REACT_APP_SERVER_URL}/employee/` + user.id, formData)
+          .then((res) => {
+            SetError("Successfully Updated")
+           console.log(res);
+          })
+          dispatch({type:"REQUEST SUCCESS"})
+
+        }
+      catch (err) {
+        console.log("Error : ", err)
+      }
+      // window.location.reload()
+      setInput('')
+      setFile('')
+      SetError('')
+    
+    
   }
-
+const [error,SetError]=useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,20 +117,34 @@ const Register = () => {
     formData.append("salary", input.salary)
     formData.append("sex", input.sex)
     formData.append("photo", file)
+
+    if(!input.name || ! input.email ||
+      ! input.phoneNumber || ! input.address ||
+      ! input.joinedDate || ! input.department ||
+      ! input.position || ! input.salary ||
+      ! input.sex || ! file
+      )
+    {
+      return SetError("Please Fill All Details")
+      
+    }
+
     try {
       dispatch({type:"REQUEST LOADING"})
 
-      await axios.post('http://localhost:5000/employee', formData)
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/employee`, formData)
         .then((res) => {
-          toast.success(res.data,{autoClose:2000})
+          toast.success("Successfully Created",{autoClose:2000})
+          SetError("Successfully Created")
         })
-        dispatch({type:"REQUEST SUCCESS"})
-
+      
+        
     }
     catch (err) {
       console.log("Error : ", err)
     }
-
+    // window.location.reload()
+    dispatch({type:"REQUEST SUCCESS"})
     setInput('')
     setFile('')
   }
@@ -125,11 +154,13 @@ const Register = () => {
   return (
     <div className='box'>
       <h1 className="form-title">Employee Registration</h1>
+      {error.length > 0 && (<div className='error'><h2>{error}</h2></div>)}
+
     {
       loading ? (<Loading/>):
       (
         <form className='form' onSubmit={handleSubmit}>
-        {/* {error.length > 0 && (<div className='error'>{error}</div>)} */}
+        
         <div className="form-group">
           <input type={"text"} name="name" value={input.name} onChange={handleChange} className="form-control" required />
           <label className="form-label">Name</label>
@@ -191,7 +222,7 @@ const Register = () => {
           <label className='showlabel'>Others</label>
         </div>
         <div className="form-group">
-          <input type={"file"} accept='image/*' name="photo" style={{ cursor: 'pointer' }} onChange={handleChange} className="form-control" />
+          <input type={"file"} accept='image/*' name="photo" style={{ cursor: 'pointer' }} onChange={handleChange} className="form-control"/>
           <label className="form-label">Profile Photo</label>
         </div>
         <div className="form-sign">
@@ -199,17 +230,17 @@ const Register = () => {
           {
             user.length === 0 ? (
               <button type={"submit"} className="btn">
-                <span className="layer"></span>Submit
+                Submit
               </button>
             ) : (
               <button type={"button"} className="btn" onClick={handleUpdate}>
-                <span className="layer"></span>Update
+               Update
               </button>
             )
           }
 
           <button type={"button"} className="btn" onClick={() => setAddEmployee(false)}>
-            <span className="layer"></span>Cancel
+            Cancel
           </button>
         </div>
       </form>

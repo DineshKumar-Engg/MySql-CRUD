@@ -14,6 +14,7 @@ EmployeeList.get('/',async (req, res) => {
       });
     } catch (error) {
       return res.status(422).json({ message: "AN error caught occured in API/display Employees" });
+      
     }
   })
 

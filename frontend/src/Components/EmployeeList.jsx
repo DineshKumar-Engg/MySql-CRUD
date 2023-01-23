@@ -31,15 +31,13 @@ const EmployeeList = () => {
 
         
         
-        useEffect(()=>{
+    useEffect(()=>{
 
             dispatch({type:"REQUEST LOADING"})
 
-            const {data}= axios.get('http://localhost:5000/list')
+            const {data}= axios.get(`${process.env.REACT_APP_SERVER_URL}/list`)
             .then((res)=>{
                 SetEmployeeList(res.data.data)
-                
-
             })
             .catch((error)=>{console.log(error)})
             console.log(data);
@@ -48,15 +46,19 @@ const EmployeeList = () => {
     },[])
 
 const handleDelete = async (id)=>{
-
+    dispatch({type:"REQUEST LOADING"})
     try{
-        await axios.delete(`http://localhost:5000/employee/`+id)
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}/employee/`+id)
         .then((res)=>{
             toast.success(res.data,{autoClose:2000})
+            console.log(res.data);
         })
     }catch(err){
         console.log(err);
     }
+    dispatch({type:"REQUEST SUCCESS"})
+    // window.location.reload()
+
 }
 const [edit,setEdit]=useState('')
  
@@ -64,7 +66,7 @@ const [edit,setEdit]=useState('')
 
     try{
 
-      const {data}=  await axios.get(`http://localhost:5000/employee/`+id)
+      const {data}=  await axios.get(`${process.env.REACT_APP_SERVER_URL}/employee/`+id)
        setEdit(data[0])
        console.log(data);
     }catch(err){
@@ -75,11 +77,15 @@ const [edit,setEdit]=useState('')
 
   return (
     <div className='employee-container'>
-
         <div className='employee-main' >
-        <table>
-            <thead>
-                <tr>
+            <div className='employee-title'>
+                <h1>Employee Details</h1>
+            </div>
+        <div className='employee-tableMain'>
+            <div className='employee-table'>
+            <table>
+                <thead>
+                     <tr>
                     <th>Photo</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -99,6 +105,7 @@ const [edit,setEdit]=useState('')
                 loading ? (<Loading/>):
                 (
                     EmployeeList.map(data=>(
+                       
                         <tr key={data.id}>
                             <td><img src={`http://localhost:5000/photo/${data.photo}`} className='employee-profile' alt=''></img></td>
                             <td>{data.name}</td>
@@ -117,13 +124,16 @@ const [edit,setEdit]=useState('')
                                 </div>
                             </td>
                         </tr>
+                       
                         ))
                 )
             }
-            
-            </tbody>
+             </tbody>
+           
         </table>
        
+            </div>
+        </div>
     </div>
     </div>
   )

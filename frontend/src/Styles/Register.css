@@ -17,10 +17,8 @@
 form{
     width: 100%;
     height:auto;
-    padding: 10px;
     margin: 10px;
     border-radius: 10px;
-    /* box-shadow: 0px 0px 20px rgba(0,0,0,0.3); */
     background-color: #ffffff;
     display: flex;
     justify-content: space-evenly;
@@ -155,16 +153,7 @@ input[type="checkbox"]{
     font-weight: 700;
     color: #ffffff;
 }
-.form-button{
-    display: block;
-    padding: 10px 20px;
-    outline: none;
-    border: none;
-    background-color: #1F1F1F;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+
 .form-button:hover{
     box-shadow: 0 10px  36px rgba(0,0,0,0.15);
 }
@@ -176,9 +165,10 @@ input[type="checkbox"]{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 .btn{
- width: 200px;
+ width:150px;
  height:50px;
  border-radius: 4px;
  border: none;
@@ -187,46 +177,10 @@ input[type="checkbox"]{
  cursor: pointer;
  color:#ffffff;
  position: relative;
- font-weight: 700;
+ font-weight: 600;
  background-color:#5631FA;
 letter-spacing: 2px;
-font-size: 20px;
+font-size: 18px;
 margin: 10px;
 }
 
-.btn:hover{
-    color: white;
-}
-.register-btn{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    color: #ffffff;
-    height: auto;
-    margin:auto;
-    justify-content: space-evenly;
-}
-.register-btn button{
-    border: none;
-    outline: none;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 22px;
-    background-color: #1B1C30;
-    color: #ffffff;
-    font-weight: 700;
-    font-family: 'Josefin Slab', serif;
-    letter-spacing: 1px;
-    cursor: pointer;
-
-}
-
-.paymentmain{
-    display: flex;
-    padding: 10px;
-    margin: 10px;
-    flex-direction:row;
-    position: relative;
-}
